@@ -689,7 +689,13 @@ class ConfigShell(object):
                 # result_trees gives us a token name on a second parser call
                 self.log.debug("Faking text entry on commandline.")
                 parse_results = self._parse_cmdline(cmdline + 'x')[0]
-                end += 1
+                #end += 1
+                if parse_results.command.value == 'x':
+                    current_token = 'command'
+                elif 'x' in [x.value for x in parse_results.pparams]:
+                    current_token = 'pparam'
+                elif 'x' in [x.value for x in parse_results.kparams]:
+                    current_token = 'kparam'
 
             if path and beg == parse_results.path.location:
                 current_token = 'path'
